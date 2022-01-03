@@ -1,7 +1,7 @@
 import React from 'react'
 import { FaEdit, FaTrash } from 'react-icons/fa'
 
-const List = ({ items }) => {
+const List = ({ items, onChangeItem, onDeleteItem }) => {
 
   return (
     <ul className='grocery-list'>
@@ -10,10 +10,10 @@ const List = ({ items }) => {
           <li key={`item${id}`} className='grocery-item'>
             <p className='title'>{item}</p>
             <div className='btn-container'>
-              <button type='button' className='edit-btn'>
+              <button type='button' className='edit-btn' onClick={() => onChangeItem(id)}>
                 <FaEdit />
               </button>
-              <button type='button' className='delete-btn'>
+              <button type='button' className='delete-btn' onClick={() => onDeleteItem(id)}>
                 <FaTrash />
               </button>
             </div>

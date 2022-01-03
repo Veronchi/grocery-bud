@@ -10,12 +10,22 @@ function App() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setList([...listItems, inputValue]);
-    setInputValue('')
+    setInputValue('');
   }
 
   const handleInputState = (e) => {
     e.preventDefault();
     setInputValue(e.target.value)
+  }
+
+  const onChangeItem = (id) => {
+    console.log(id)
+  }
+
+  const onDeleteItem = (id) => {
+    listItems.splice(id, 1);
+    
+    setList([...listItems]);
   }
 
   return (
@@ -33,7 +43,7 @@ function App() {
         </div>
       </form>
       <div className='grocery-container'>
-        {listItems.length ? <List items={listItems} /> : null}
+        {listItems.length ? <List items={listItems} onChangeItem={onChangeItem} onDeleteItem={onDeleteItem}/> : null}
       </div>
     </section>
   )
