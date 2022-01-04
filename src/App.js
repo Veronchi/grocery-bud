@@ -3,7 +3,10 @@ import List from './List'
 import Alert from './Alert'
 
 function App() {
-  const [inputValue, setInputValue] = useState('');
+  const [inputValue, setInputValue] = useState({
+    id: '',
+    item: ''
+  });
   // const [isSubmit, setIsSubmit] = useState(false);
   const [listItems, setList] = useState([]);
 
@@ -14,8 +17,9 @@ function App() {
   }
 
   const handleInputState = (e) => {
-    e.preventDefault();
-    setInputValue(e.target.value)
+    setInputValue(
+      { id: Date.now(), item: e.target.value }
+    );
   }
 
   const onChangeItem = (id) => {
@@ -24,7 +28,6 @@ function App() {
 
   const onDeleteItem = (id) => {
     listItems.splice(id, 1);
-    
     setList([...listItems]);
   }
 
@@ -36,17 +39,15 @@ function App() {
           <input
             type='text' className='grocery'
             placeholder='e.g. eggs'
-            value={inputValue}
+            value={inputValue.value}
             onChange={handleInputState}
           />
           <button type='submit' className='submit-btn'>submiit</button>
         </div>
       </form>
-      <div className='grocery-container'>
-        {listItems.length ? <List items={listItems} onChangeItem={onChangeItem} onDeleteItem={onDeleteItem}/> : null}
-      </div>
+      {listItems.length ? <List items={listItems} onChangeItem={onChangeItem} onDeleteItem={onDeleteItem} /> : null}
     </section>
   )
-}
 
+}
 export default App
