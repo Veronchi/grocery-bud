@@ -6,14 +6,14 @@ import Alert from './Alert'
 function App() {
   const inputDefaultState = { id: '', text: '' };
   const [inputValue, setInputValue] = useState(inputDefaultState);
-  const [listItems, setList] = useState([]);
+  const [listItems, setListItems] = useState([]);
   const [submit, setSubmit] = useState('submit');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const obj = {
       submit: function () {
-        setList([...listItems, { id: Date.now(), text: inputValue.text }]);
+        setListItems([...listItems, { id: Date.now(), text: inputValue.text }]);
         setInputValue(inputDefaultState);
       },
       edit: function () {
@@ -21,7 +21,7 @@ function App() {
           if (inputValue.id === item.id) item.text = inputValue.text;
           return item;
         });
-        setList(listItem);
+        setListItems(listItem);
         setSubmit('submit');
         setInputValue(inputDefaultState);
       }
@@ -44,7 +44,11 @@ function App() {
   const onDeleteItem = (id) => {
     const newItemList = listItems.filter((item) => item.id !== id);
 
-    setList(newItemList);
+    setListItems(newItemList);
+  }
+
+  const onClearList = () => {
+    setListItems([]);
   }
 
   return (
@@ -61,7 +65,7 @@ function App() {
           <button type='submit' className='submit-btn'>{submit}</button>
         </div>
       </form>
-      {listItems.length ? <List items={listItems} onEditItem={onEditItem} onDeleteItem={onDeleteItem} /> : null}
+      {listItems.length ? <List items={listItems} onEditItem={onEditItem} onDeleteItem={onDeleteItem} onClearList={onClearList} /> : null}
     </section>
   )
 
