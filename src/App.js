@@ -2,28 +2,42 @@ import React, { useState, useEffect } from 'react'
 import List from './List'
 import Alert from './Alert'
 
+
 function App() {
-  const [inputValue, setInputValue] = useState({
-    id: '',
-    item: ''
-  });
-  // const [isSubmit, setIsSubmit] = useState(false);
+  const inputDefaultState = { id: '', text: '' };
+  const [inputValue, setInputValue] = useState(inputDefaultState);
   const [listItems, setList] = useState([]);
+  const [submit, setSubmit] = useState('submit');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setList([...listItems, inputValue]);
-    setInputValue('');
+    const obj = {
+      submit: function () {
+        setList([...listItems, { id: Date.now(), text: inputValue.text }]);
+        setInputValue(inputDefaultState);
+      },
+      edit: function () {
+        let listItem = listItems.map((item) => {
+          if (inputValue.id === item.id) item.text = inputValue.text;
+          return item;
+        });
+        setList(listItem);
+        setSubmit('submit');
+      }
+    }
+    obj[submit]();
   }
 
   const handleInputState = (e) => {
     setInputValue(
-      { id: Date.now(), item: e.target.value }
+      { ...inputValue, text: e.target.value }
     );
   }
 
-  const onChangeItem = (id) => {
-    console.log(id)
+  const onEditItem = (idx) => {
+    let { id, text } = listItems.find((item) => item.id === idx);
+    setInputValue({ id: id, text: text });
+    setSubmit('edit');
   }
 
   const onDeleteItem = (id) => {
@@ -39,13 +53,13 @@ function App() {
           <input
             type='text' className='grocery'
             placeholder='e.g. eggs'
-            value={inputValue.value}
+            value={inputValue.text}
             onChange={handleInputState}
           />
-          <button type='submit' className='submit-btn'>submiit</button>
+          <button type='submit' className='submit-btn'>{submit}</button>
         </div>
       </form>
-      {listItems.length ? <List items={listItems} onChangeItem={onChangeItem} onDeleteItem={onDeleteItem} /> : null}
+      {listItems.length ? <List items={listItems} onEditItem={onEditItem} onDeleteItem={onDeleteItem} /> : null}
     </section>
   )
 
