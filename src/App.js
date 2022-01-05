@@ -41,8 +41,9 @@ function App() {
   }
 
   const onDeleteItem = (id) => {
-    listItems.splice(id, 1);
-    setList([...listItems]);
+    const newItemList = listItems.filter((item) => item.id !== id);
+
+    setList(newItemList);
   }
 
   return (
