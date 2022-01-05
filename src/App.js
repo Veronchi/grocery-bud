@@ -23,6 +23,7 @@ function App() {
         });
         setList(listItem);
         setSubmit('submit');
+        setInputValue(inputDefaultState);
       }
     }
     obj[submit]();
