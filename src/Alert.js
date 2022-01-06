@@ -1,7 +1,13 @@
 import React, { useEffect } from 'react'
 
-const Alert = () => {
-  return <h2>alert component</h2>
+const Alert = ({ status, messageText, clearAlert }) => {
+  let message = <p className={`alert alert-${status}`} >{messageText}</p>;
+
+  return (
+    <React.Fragment>
+      {message}
+    </React.Fragment>
+  );
 }
 
 export default Alert

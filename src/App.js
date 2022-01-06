@@ -8,6 +8,8 @@ function App() {
   const [inputValue, setInputValue] = useState(inputDefaultState);
   const [listItems, setListItems] = useState([]);
   const [submit, setSubmit] = useState('submit');
+  const [alert, setAlert] = useState(null);
+  // const [alert, setAlert] = useState({ status: '', messageText: '' });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,7 +28,14 @@ function App() {
         setInputValue(inputDefaultState);
       }
     }
-    obj[submit]();
+    if (inputValue.text === '') {
+      setAlert(
+        {status: 'danger', messageText: 'please enter value'}
+      );
+    } else {
+      obj[submit]();
+    }
+
   }
 
   const handleInputState = (e) => {
@@ -51,9 +60,14 @@ function App() {
     setListItems([]);
   }
 
+  const clearAlert = () => {
+    setAlert(null);
+  }
+
   return (
     <section className='section-center'>
       <form className='grocery-form' onSubmit={handleSubmit}>
+        {(alert) ? <Alert {...alert} clearAlert={clearAlert}/> : null}
         <h3>grocery bud</h3>
         <div className='form-control'>
           <input
