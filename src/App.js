@@ -9,7 +9,6 @@ function App() {
   const [listItems, setListItems] = useState([]);
   const [submit, setSubmit] = useState('submit');
   const [alert, setAlert] = useState(null);
-  // const [alert, setAlert] = useState({ status: '', messageText: '' });
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,6 +16,9 @@ function App() {
       submit: function () {
         setListItems([...listItems, { id: Date.now(), text: inputValue.text }]);
         setInputValue(inputDefaultState);
+        setAlert(
+          {status: 'success', messageText: 'item added to the list'}
+        );
       },
       edit: function () {
         let listItem = listItems.map((item) => {
