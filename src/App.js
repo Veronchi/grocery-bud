@@ -66,6 +66,9 @@ function App() {
 
   const onClearList = () => {
     setListItems([]);
+    setAlert(
+      {status: 'danger', messageText: 'empty list'}
+    );
   }
 
   const clearAlert = () => {
