@@ -4,11 +4,30 @@ import Alert from './Alert'
 
 
 function App() {
+  const storageInputValue = JSON.parse(localStorage.getItem('inputValue'));
+  const storageListItems = JSON.parse(localStorage.getItem('listItems'));
+  const storageEditMode = JSON.parse(localStorage.getItem('editMode'));
+
   const inputDefaultState = { id: '', text: '' };
-  const [inputValue, setInputValue] = useState(inputDefaultState);
-  const [listItems, setListItems] = useState([]);
-  const [submit, setSubmit] = useState('submit');
+  const [inputValue, setInputValue] = useState(storageInputValue || inputDefaultState);
+  const [listItems, setListItems] = useState(storageListItems || []);
+  const [submit, setSubmit] = useState(storageEditMode || 'submit');
   const [alert, setAlert] = useState(null);
+
+  useEffect(() => {
+    const stateJSON = JSON.stringify(inputValue);
+    localStorage.setItem('inputValue', stateJSON);
+  }, [inputValue]);
+
+  useEffect(() => {
+    const stateJSON = JSON.stringify(listItems);
+    localStorage.setItem('listItems', stateJSON);
+  }, [listItems]);
+
+  useEffect(() => {
+    const stateJSON = JSON.stringify(submit);
+    localStorage.setItem('editMode', stateJSON);
+  }, [submit]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -44,9 +63,7 @@ function App() {
   }
 
   const handleInputState = (e) => {
-    setInputValue(
-      { ...inputValue, text: e.target.value }
-    );
+    setInputValue({ ...inputValue, text: e.target.value });
   }
 
   const onEditItem = (idx) => {
