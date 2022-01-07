@@ -59,6 +59,9 @@ function App() {
     const newItemList = listItems.filter((item) => item.id !== id);
 
     setListItems(newItemList);
+    setAlert(
+      {status: 'danger', messageText: 'item removed'}
+    );
   }
 
   const onClearList = () => {
