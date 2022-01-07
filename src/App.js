@@ -27,6 +27,9 @@ function App() {
         });
         setListItems(listItem);
         setSubmit('submit');
+        setAlert(
+          {status: 'success', messageText: 'value changed'}
+        );
         setInputValue(inputDefaultState);
       }
     }
